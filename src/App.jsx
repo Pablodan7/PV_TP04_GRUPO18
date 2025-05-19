@@ -1,41 +1,35 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import ProductForm from './componentes/ProductForms.jsx'; 
 
 function App() {
-
-  const [productos, setProductos] = useState([]);
-
-  const agregarproducto = useCallback((nuevoproductito) => {
-
-    const existe = productos.some(prod => prod.id === nuevoproductito.id);
-    if (existe) {
-      alert('Ese ID ya existe de algun producto');
-      return;
-    }
-
-    const productodescuento = {
-      ...nuevoproductito,
-      precioConDescuento: nuevoproductito.precioUnitario * (1 - nuevoproductito.descuento / 100),
-    };
-
-    setProductos(prevProductos => [...prevProductos, productodescuento]);
-
-  },[productos]);
-
-  useEffect(() => {
-    console.log('Lista de productos actualizada:', productos);
-  }, [productos]);
+  const [count, setCount] = useState(0)
 
   return (
-    <div>
-     <ProductForm onGuardar={agregarproducto}/>
-    </div>
-  );
+    <>
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.jsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
+  )
 }
 
-
-export default App;
-
+export default App
