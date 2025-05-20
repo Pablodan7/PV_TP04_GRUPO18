@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function ProductForm({ onGuardar }) {
-
+const ProductForm = ({ onGuardar, editingProduct }) => {
   const [id, setId] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [precioUnitario, setPrecioUnitario] = useState('');
   const [descuento, setDescuento] = useState('');
   const [stock, setStock] = useState('');
+
+  useEffect(() => {
+    if (editingProduct) {
+      setId(editingProduct.id);
+      setDescripcion(editingProduct.descripcion);
+      setPrecioUnitario(editingProduct.precioUnitario);
+      setDescuento(editingProduct.descuento);
+      setStock(editingProduct.stock);
+    }
+  }, [editingProduct]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,35 +44,35 @@ function ProductForm({ onGuardar }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        placeholder="ID"
+      <label className="form-label">ID</label>
+      <input className="form-input"
         value={id}
         onChange={e => setId(e.target.value)}
       />
-      <input
-        placeholder="Descripción"
+      <label className="form-label">Descripción</label>
+      <input className="form-input"
         value={descripcion}
         onChange={e => setDescripcion(e.target.value)}
       />
-      <input
+      <label className="form-label">Precio Unitario</label>
+      <input className="form-input"
         type="number"
-        placeholder="Precio Unitario"
         value={precioUnitario}
         onChange={e => setPrecioUnitario(e.target.value)}
       />
-      <input
+      <label className="form-label">Descuento (%)</label>
+      <input className="form-input"
         type="number"
-        placeholder="Descuento (%)"
         value={descuento}
         onChange={e => setDescuento(e.target.value)}
       />
-      <input
+      <label className="form-label">Stock</label>
+      <input className="form-input"
         type="number"
-        placeholder="Stock"
         value={stock}
         onChange={e => setStock(e.target.value)}
       />
-      <button type="submit">Agregar Producto</button>
+      <button type="submit" className="form-button">Agregar Producto</button>
     </form>
   );
 }

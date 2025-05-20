@@ -1,10 +1,13 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import './App.css';
 import ProductForm from './componentes/ProductForms.jsx'; 
 import ProductList from './componentes/ProductList.jsx';
+import SearchBar from './componentes/SearchBar.jsx';
 
 function App() {
   const [productos, setProductos] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  
 
   const agregarProducto = useCallback((nuevoProducto) => {
     const existe = productos.some(prod => prod.id === nuevoProducto.id);
@@ -31,14 +34,27 @@ function App() {
     );
   }, []);
 
+const productosFiltrados = useMemo(() => {
+  return productos.filter(producto => {
+    const termino = searchTerm.toLowerCase();
+    const descripcion = producto.descripcion?.toLowerCase() ?? '';
+    const id = String(producto.id).toLowerCase();
+
+    return descripcion.includes(termino) || id.includes(termino);
+  });
+}, [productos, searchTerm]);
+
+
+
   useEffect(() => {
     console.log('Lista de productos actualizada:', productos);
   }, [productos]);
 
   return (
-    <div>
+    <div className="app-container">
+      <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
       <ProductForm onGuardar={agregarProducto} />
-      <ProductList productos={productos} onEliminar={eliminarProducto} onEditar={modificarProducto} />
+      <ProductList productos={productosFiltrados} onEliminar={eliminarProducto} onEditar={modificarProducto} />
     </div>
   );
 }
