@@ -35,12 +35,21 @@ const ProductForm = ({ onGuardar, editingProduct }) => {
 
     onGuardar(nuevoProducto);
 
-    setId('');
+    
+    if (!editingProduct) // Limpio el formulario solo si no se esta editando
+    {
+      setId('');
+    }
     setDescripcion('');
     setPrecioUnitario('');
     setDescuento('');
     setStock('');
   };
+
+  let boton_texto = 'Agregar Producto'; //variable para controlar el texto que tiene el boton ya sea agrgar o guardar
+  if (editingProduct) {
+    boton_texto = 'Guardar cambios';  // cambia si editingProduct cambia el valor
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -72,7 +81,8 @@ const ProductForm = ({ onGuardar, editingProduct }) => {
         value={stock}
         onChange={e => setStock(Math.max(0, e.target.value))}
       />
-      <button type="submit" className="form-button">Agregar Producto</button>
+      <button type="submit" className="form-button"> {boton_texto}</button> {/* variable para el tecto del boton*/}
+
     </form>
   );
 }
