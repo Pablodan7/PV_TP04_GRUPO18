@@ -1,7 +1,8 @@
-function ProductItem({ producto, onEliminar, onEditar }) {
+const ProductItem=({ producto, onEliminar, onEditar }) =>{
   const precioConDescuento = producto.precioUnitario * (1 - producto.descuento / 100);
 
   return (
+    <div key={producto.id} className="tarjeta-producto">
     <li>
       <p><strong>ID:</strong> {producto.id}</p>
       <p><strong>Descripción:</strong> {producto.descripcion}</p>
@@ -10,9 +11,10 @@ function ProductItem({ producto, onEliminar, onEditar }) {
       <p><strong>Precio con Descuento:</strong> ${precioConDescuento.toFixed(2)}</p>
       <p><strong>Stock:</strong> {producto.stock}</p>
       
-      <button onClick={() => onEditar(producto)}>Editar</button>
-      <button onClick={() => onEliminar(producto.id)}>Eliminar</button>
+      <button className="editar" onClick={() => onEditar(producto)}>Editar</button>
+      <button className="eliminar" onClick={() => onEliminar(producto.id)}>Eliminar</button>
     </li>
+  </div>
   );
 }
 

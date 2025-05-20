@@ -1,8 +1,8 @@
 import ProductItem from './ProductItem.jsx';
 
-function ProductList({ productos, onEliminar, onEditar }) {
+const ProductList = ({ productos, onEliminar, onEditar }) => {
   return (
-    <div>
+    <div className="producto">
       <h2>Lista de Productos</h2>
       {productos.length === 0 ? <p>No hay productos.</p> : (
         <ul>
