@@ -28,9 +28,9 @@ const ProductForm = ({ onGuardar, editingProduct }) => {
     const nuevoProducto = {
       id,
       descripcion,
-      precioUnitario: parseFloat(precioUnitario),
-      descuento: parseFloat(descuento),
-      stock: parseInt(stock, 10),
+      precioUnitario: Math.max(0, parseFloat(precioUnitario)),
+      descuento: Math.min(100, Math.max(0, parseFloat(descuento))),
+      stock: Math.max(0, parseInt(stock, 10)),
     };
 
     onGuardar(nuevoProducto);
@@ -58,19 +58,19 @@ const ProductForm = ({ onGuardar, editingProduct }) => {
       <input className="form-input"
         type="number"
         value={precioUnitario}
-        onChange={e => setPrecioUnitario(e.target.value)}
+        onChange={e => setPrecioUnitario(Math.max(0, e.target.value))}
       />
       <label className="form-label">Descuento (%)</label>
       <input className="form-input"
         type="number"
         value={descuento}
-        onChange={e => setDescuento(e.target.value)}
+        onChange={e => setDescuento(Math.min(100, Math.max(0, e.target.value)))}
       />
       <label className="form-label">Stock</label>
       <input className="form-input"
         type="number"
         value={stock}
-        onChange={e => setStock(e.target.value)}
+        onChange={e => setStock(Math.max(0, e.target.value))}
       />
       <button type="submit" className="form-button">Agregar Producto</button>
     </form>
